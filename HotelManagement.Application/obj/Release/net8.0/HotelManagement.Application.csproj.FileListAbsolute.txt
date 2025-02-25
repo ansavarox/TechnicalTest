@@ -1,0 +1,15 @@
+D:\Test\HotelManagement\HotelManagement.Application\bin\Release\net8.0\HotelManagement.Application.deps.json
+D:\Test\HotelManagement\HotelManagement.Application\bin\Release\net8.0\HotelManagement.Application.dll
+D:\Test\HotelManagement\HotelManagement.Application\bin\Release\net8.0\HotelManagement.Application.pdb
+D:\Test\HotelManagement\HotelManagement.Application\bin\Release\net8.0\HotelManagement.Domain.dll
+D:\Test\HotelManagement\HotelManagement.Application\bin\Release\net8.0\HotelManagement.Domain.pdb
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\HotelManagement.Application.csproj.AssemblyReference.cache
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\HotelManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\HotelManagement.Application.AssemblyInfoInputs.cache
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\HotelManagement.Application.AssemblyInfo.cs
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\HotelManagement.Application.csproj.CoreCompileInputs.cache
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\HotelMan.6B58BC18.Up2Date
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\HotelManagement.Application.dll
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\refint\HotelManagement.Application.dll
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\HotelManagement.Application.pdb
+D:\Test\HotelManagement\HotelManagement.Application\obj\Release\net8.0\ref\HotelManagement.Application.dll

@@ -1,0 +1,12 @@
+D:\Test\HotelManagement\HotelManagement.Domain\bin\Debug\net8.0\HotelManagement.Domain.deps.json
+D:\Test\HotelManagement\HotelManagement.Domain\bin\Debug\net8.0\HotelManagement.Domain.dll
+D:\Test\HotelManagement\HotelManagement.Domain\bin\Debug\net8.0\HotelManagement.Domain.pdb
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\HotelManagement.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\HotelManagement.Domain.AssemblyInfoInputs.cache
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\HotelManagement.Domain.AssemblyInfo.cs
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\HotelManagement.Domain.csproj.CoreCompileInputs.cache
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\HotelManagement.Domain.dll
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\refint\HotelManagement.Domain.dll
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\HotelManagement.Domain.pdb
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\ref\HotelManagement.Domain.dll
+D:\Test\HotelManagement\HotelManagement.Domain\obj\Debug\net8.0\HotelManagement.Domain.csproj.AssemblyReference.cache
