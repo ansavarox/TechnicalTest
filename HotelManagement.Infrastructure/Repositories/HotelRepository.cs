@@ -67,6 +67,24 @@ namespace HotelManagement.Infrastructure.Repositories
         }
 
         /// <summary>
+        /// Updates an existing hotel`s status based on its ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isActive"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateHotelStatusAsync(int id, bool isActive)
+        {
+            var hotel = await _context.Hotels.FindAsync(id);
+            if (hotel == null)
+                return false;
+
+            hotel.Isactive = isActive;
+            _context.Hotels.Update(hotel);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        /// <summary>
         /// Adds multiple hotels to the database in a single transaction.
         /// </summary>
         /// <param name="hotels">A collection of hotel entities to add.</param>
@@ -74,6 +92,16 @@ namespace HotelManagement.Infrastructure.Repositories
         {
             await _context.Hotels.AddRangeAsync(hotels);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Validates if hotel exists
+        /// </summary>
+        /// <param name="hotelId"></param>
+        /// <returns></returns>
+        public async Task<bool> ExistsAsync(int hotelId)
+        {
+            return await _context.Hotels.AnyAsync(h => h.Id == hotelId);
         }
     }
 }

@@ -90,11 +90,11 @@ namespace HotelManagement.Api.Controllers
         /// <response code="400">If the request body is invalid.</response>
         /// <response code="404">If the room is not found or does not belong to the specified hotel.</response>
         [Authorize(Roles = "Agent")]
-        [HttpPatch("UpdateRoomByHotelId")]
+        [HttpPut("UpdateRoomByHotelId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(object), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(object), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateRoom(int hotelId, int roomId, [FromBody] RoomUpdateDto? updateRoomDto)
+        public async Task<IActionResult> UpdateRoom(int hotelId, int roomId, [FromBody] RoomUpdateDto updateRoomDto)
         {
             if (updateRoomDto == null)
                 return BadRequest(new { message = "Invalid request body." });
@@ -105,6 +105,28 @@ namespace HotelManagement.Api.Controllers
                 return NotFound(new { message = "Room not found or does not belong to the specified hotel." });
 
             return Ok(new { message = "Room updated successfully." });
+        }
+
+        /// <summary>
+        /// Updates status of a specific room within a hotel.
+        /// </summary>
+        /// <param name="hotelId"></param>
+        /// <param name="roomId"></param>
+        /// <param name="isActive"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Agent")]
+        [HttpPatch("UpdateRoomStatusById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateRoomStatus(int hotelId, int roomId, [FromBody] bool isActive)
+        {
+            var updated = await _roomService.UpdateRoomStatusAsync(hotelId, roomId, isActive);
+
+            if (!updated)
+                return NotFound(new { message = "Room not found or does not belong to the specified hotel." });
+
+            return Ok(new { message = "Room status updated successfully." });
         }
 
         /// <summary>

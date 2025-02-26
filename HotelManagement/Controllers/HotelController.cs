@@ -93,7 +93,7 @@ namespace HotelManagement.Api.Controllers
         /// <response code="200">Indicates that the hotel was successfully updated.</response>
         /// <response code="400">If the request body is invalid.</response>
         /// <response code="404">If the hotel is not found.</response>
-        [HttpPatch("UpdateHotelById")]
+        [HttpPut("UpdateHotelById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(object), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(object), StatusCodes.Status404NotFound)]
@@ -102,12 +102,35 @@ namespace HotelManagement.Api.Controllers
             if (hotelDto == null)
                 return BadRequest(new { message = "Invalid request body." });
 
-            var updated = await _hotelService.UpdateHotelAsync(id, hotelDto); // ✅ Ahora pasamos el id
+            var updated = await _hotelService.UpdateHotelAsync(id, hotelDto);
 
             if (!updated)
                 return NotFound(new { message = "Hotel not found." });
 
             return Ok(new { message = "Hotel updated successfully." });
+        }
+
+        /// <summary>
+        /// Updates an existing hotel`s status by its unique identifier.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="statusDto"></param>
+        /// <returns></returns>
+        [HttpPatch("UpdateHotelStatusById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateHotelStatus(int id, [FromBody] HotelStatusUpdateDto statusDto)
+        {
+            if (statusDto == null)
+                return BadRequest(new { message = "Invalid request body." });
+
+            var updated = await _hotelService.UpdateHotelStatusAsync(id, statusDto.IsActive);
+
+            if (!updated)
+                return NotFound(new { message = "Hotel not found." });
+
+            return Ok(new { message = "Hotel status updated successfully." });
         }
     }
 }

@@ -44,5 +44,20 @@ namespace HotelManagement.Application.Interfaces
         /// </summary>
         /// <param name="hotels">A collection of hotels to be added.</param>
         Task AddRangeAsync(IEnumerable<Hotel> hotels);
+
+        /// <summary>
+        /// Validates if hotel exists
+        /// </summary>
+        /// <param name="hotelId"></param>
+        /// <returns></returns>
+        Task<bool> ExistsAsync(int hotelId);
+
+        /// <summary>
+        /// Updates an existing hotel`s status in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isActive"></param>
+        /// <returns></returns>
+        Task<bool> UpdateHotelStatusAsync(int id, bool isActive);
     }
 }

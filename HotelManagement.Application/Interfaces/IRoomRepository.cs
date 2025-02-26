@@ -40,6 +40,14 @@ namespace HotelManagement.Application.Interfaces
         Task UpdateAsync(Room room);
 
         /// <summary>
+        /// Updates an existing room's status.
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="isActive"></param>
+        /// <returns></returns>
+        Task<bool> UpdateRoomStatusAsync(int hotelId, int roomId, bool isActive);
+
+        /// <summary>
         /// Adds multiple rooms to the database in a batch operation.
         /// </summary>
         /// <param name="rooms">A collection of rooms to be added.</param>
@@ -61,5 +69,13 @@ namespace HotelManagement.Application.Interfaces
         /// <param name="reservationId">The reservation ID.</param>
         /// <returns>The total guest capacity of the reserved room.</returns>
         Task<int> GetRoomCapacityByReservationIdAsync(int reservationId);
+
+        /// <summary>
+        /// Validates if room exists
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <returns></returns>
+        Task<bool> ExistsAsync(int roomId);
+
     }
 }

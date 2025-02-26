@@ -71,27 +71,14 @@ namespace HotelManagement.Application.Services
         {
             var room = await _roomRepository.GetByIdAsync(roomId);
             if (room == null || room.Hotelid != hotelId)
-            {
                 return false;
-            }
 
-            if (updateRoomDto.Capacity.HasValue)
-                room.Capacity = updateRoomDto.Capacity.Value;
-
-            if (updateRoomDto.BaseCost.HasValue)
-                room.Basecost = updateRoomDto.BaseCost.Value;
-
-            if (updateRoomDto.Taxes.HasValue)
-                room.Taxes = updateRoomDto.Taxes.Value;
-
-            if (updateRoomDto.IsActive.HasValue)
-                room.Isactive = updateRoomDto.IsActive.Value;
-
-            if (!string.IsNullOrEmpty(updateRoomDto.Location))
-                room.Location = updateRoomDto.Location;
-
-            if (!string.IsNullOrEmpty(updateRoomDto.RoomType))
-                room.RoomType = updateRoomDto.RoomType;
+            room.Capacity = updateRoomDto.Capacity;
+            room.Basecost = updateRoomDto.BaseCost;
+            room.Taxes = updateRoomDto.Taxes;
+            room.Isactive = updateRoomDto.IsActive;
+            room.Location = updateRoomDto.Location;
+            room.RoomType = updateRoomDto.RoomType;
 
             await _roomRepository.UpdateAsync(room);
             return true;
@@ -104,10 +91,40 @@ namespace HotelManagement.Application.Services
         /// <returns>A list of available rooms matching the search criteria.</returns>
         public async Task<IEnumerable<RoomBasicDto>> SearchRoomsAsync(SearchRoomsDto searchDto)
         {
-            var checkInDate = searchDto.CheckIn.ToDateTime(TimeOnly.MinValue);  // 00:00:00
-            var checkOutDate = searchDto.CheckOut.ToDateTime(TimeOnly.MaxValue); // 23:59:59
+            var checkInDate = searchDto.CheckIn.ToDateTime(TimeOnly.MinValue);  
+            var checkOutDate = searchDto.CheckOut.ToDateTime(TimeOnly.MaxValue);
+
+           
+            if (checkOutDate <= checkInDate)
+            {
+                throw new ArgumentException("Check-out date must be after check-in date.");
+            }
+
+            
+            if (checkInDate < DateTime.UtcNow.Date)
+            {
+                throw new ArgumentException("Check-in date cannot be in the past.");
+            }
 
             return await _roomRepository.SearchRoomsAsync(checkInDate, checkOutDate, searchDto.Guests, searchDto.City);
+        }
+
+        /// <summary>
+        ///  Updates the status of a specific room in a given hotel.
+        /// </summary>
+        /// <param name="hotelId"></param>
+        /// <param name="roomId"></param>
+        /// <param name="isActive"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateRoomStatusAsync(int hotelId, int roomId, bool isActive)
+        {
+            var room = await _roomRepository.GetByIdAsync(roomId);
+            if (room == null || room.Hotelid != hotelId)
+                return false;
+
+            room.Isactive = isActive;
+            await _roomRepository.UpdateAsync(room);
+            return true;
         }
     }
 }

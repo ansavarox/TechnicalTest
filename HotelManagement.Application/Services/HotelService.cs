@@ -96,6 +96,23 @@ namespace HotelManagement.Application.Services
         }
 
         /// <summary>
+        /// Updates an existing hotel`s status based on its ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isActive"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateHotelStatusAsync(int id, bool isActive)
+        {
+            var hotel = await _hotelRepository.GetByIdAsync(id);
+            if (hotel == null)
+                return false;
+
+            hotel.Isactive = isActive;
+            await _hotelRepository.UpdateAsync(hotel);
+            return true;
+        }
+
+        /// <summary>
         /// Adds multiple hotels to the system in bulk.
         /// </summary>
         /// <param name="hotels">A collection of hotels to add.</param>

@@ -15,14 +15,23 @@ namespace HotelManagement.Application.Services
     public class ReservationService
     {
         private readonly IReservationRepository _reservationRepository;
+        private readonly IHotelRepository _hotelRepository;
+        private readonly IRoomRepository _roomRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReservationService"/> class.
         /// </summary>
         /// <param name="reservationRepository">The repository responsible for reservation data access.</param>
-        public ReservationService(IReservationRepository reservationRepository)
+        /// <param name="hotelRepository">The repository responsible for hotel data access.</param>
+        /// <param name="roomRepository">The repository responsible for room data access.</param>
+        public ReservationService(
+            IReservationRepository reservationRepository,
+            IHotelRepository hotelRepository,
+            IRoomRepository roomRepository)
         {
             _reservationRepository = reservationRepository;
+            _hotelRepository = hotelRepository;
+            _roomRepository = roomRepository;
         }
 
         /// <summary>
@@ -89,6 +98,37 @@ namespace HotelManagement.Application.Services
         /// <returns>The created reservation object.</returns>
         public async Task<Reservation> CreateReservation(int userId, int hotelId, int roomId, DateOnly checkIn, DateOnly checkOut)
         {
+            
+            if (checkIn >= checkOut)
+            {
+                throw new ArgumentException("Check-in date must be before check-out date.");
+            }
+
+          
+            if (checkIn < DateOnly.FromDateTime(DateTime.UtcNow))
+            {
+                throw new ArgumentException("Check-in date cannot be in the past.");
+            }
+
+           
+            var hotelExists = await _hotelRepository.ExistsAsync(hotelId);
+            if (!hotelExists)
+            {
+                throw new ArgumentException("The specified hotel does not exist.");
+            }
+
+            var roomExists = await _roomRepository.ExistsAsync(roomId);
+            if (!roomExists)
+            {
+                throw new ArgumentException("The specified room does not exist.");
+            }
+
+            bool isRoomAvailable = await _reservationRepository.IsRoomAvailable(roomId, checkIn, checkOut);
+            if (!isRoomAvailable)
+            {
+                throw new ArgumentException("The room is already booked for the selected dates.");
+            }
+
             var reservation = new Reservation
             {
                 Travelerid = userId,

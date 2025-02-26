@@ -38,20 +38,29 @@ namespace HotelManagement.Application.Services
         public async Task<bool> AddGuestsAsync(List<ReservationGuestDto> guestsDto, int reservationId)
         {
             int currentGuestCount = await _reservationGuestRepository.GetGuestCountByReservationIdAsync(reservationId);
-
             int roomCapacity = await _roomRepository.GetRoomCapacityByReservationIdAsync(reservationId);
-           
+
             if (currentGuestCount + guestsDto.Count > roomCapacity)
             {
                 throw new InvalidOperationException($"This room can only accommodate {roomCapacity} additional guests.");
+            }
+     
+            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
+
+            foreach (var guest in guestsDto)
+            {
+                if (guest.BirthDate > today)
+                {
+                    throw new InvalidOperationException($"Birthdate cannot be in the future for guest: {guest.FullName}.");
+                }
             }
 
             var guests = guestsDto.Select(g => new Reservationguest
             {
                 Fullname = g.FullName,
                 Birthdate = g.BirthDate,
-                Gender = g.Gender,
-                Documenttype = g.DocumentType,
+                Gender = g.Gender.ToString(),
+                Documenttype = g.DocumentType.ToString(),
                 Documentnumber = g.DocumentNumber,
                 Email = g.Email,
                 Phone = g.Phone,

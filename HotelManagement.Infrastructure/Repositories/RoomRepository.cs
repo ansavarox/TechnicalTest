@@ -139,5 +139,34 @@ namespace HotelManagement.Infrastructure.Repositories
 
             return room?.Capacity ?? 0;
         }
+
+        /// <summary>
+        /// Validates if room exists
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <returns></returns>
+        public async Task<bool> ExistsAsync(int roomId)
+        {
+            return await _context.Rooms.AnyAsync(r => r.Id == roomId);
+        }
+
+        /// <summary>
+        ///  Updates an existing room`s status in the database.
+        /// </summary>
+        /// <param name="hotelId"></param>
+        /// <param name="roomId"></param>
+        /// <param name="isActive"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateRoomStatusAsync(int hotelId, int roomId, bool isActive)
+        {
+            var room = await _context.Rooms.FirstOrDefaultAsync(r => r.Id == roomId && r.Hotelid == hotelId);
+
+            if (room == null)
+                return false;
+
+            room.Isactive = isActive;
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
